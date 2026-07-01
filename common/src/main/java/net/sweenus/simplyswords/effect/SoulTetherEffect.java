@@ -37,7 +37,10 @@ public class SoulTetherEffect extends StatusEffect {
         if (!livingEntity.getWorld().isClient()) {
             int detonateDelay = 15;
             ServerWorld world = (ServerWorld) livingEntity.getWorld();
-            DamageSource damageSource = livingEntity.getDamageSources().playerAttack(livingEntity instanceof PlayerEntity player ? player : null);
+            DamageSource damageSource = (sourceEntity instanceof PlayerEntity player)
+                ? livingEntity.getDamageSources().playerAttack(player)
+                : livingEntity.getDamageSources().generic()
+            ;
 
             if (remainingDetonations <= 0) {
                 remainingDetonations = 10; // For Cycling effect
