@@ -33,11 +33,12 @@ public class PainEffect extends StatusEffect {
             }
 
             if (livingEntity.age % Math.max(1, (startingTickFrequency - (amplifier / 8))) == 0) {
-                DamageSource damageSource = livingEntity.getDamageSources().generic();
                 float amount = (1 + amplifier) * 0.5f;
                 livingEntity.timeUntilRegen = 0;
-                if (sourceEntity != null && sourceEntity instanceof PlayerEntity player)
-                    damageSource = livingEntity.getDamageSources().playerAttack(player);
+                DamageSource damageSource = (sourceEntity instanceof PlayerEntity player)
+                    ? livingEntity.getDamageSources().playerAttack(player)
+                    : livingEntity.getDamageSources().generic()
+                ;
                 //livingEntity.damage(damageSource, (1 + amplifier) * 0.5f);
                 HelperMethods.applyDamageWithoutKnockback(livingEntity, damageSource, amount);
                 livingEntity.timeUntilRegen = 0;
